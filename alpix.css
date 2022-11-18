@@ -486,7 +486,7 @@ textarea:focus{
     box-sizing: border-box;
 }
 .listagem-item:hover{
-    box-shadow: 0 4px 15px #f1f0fa;
+    /* box-shadow: 0 4px 15px #f1f0fa; */
 }
 .listagem-item{margin:15px 0!important;}
 .listagem-item .produto-avise,
@@ -3804,7 +3804,7 @@ padding: 0 2rem!important;
 .listagem .listagem-item:hover .theme_productBuyContainer{
     translate: 0 0;
     opacity: 1;
-    box-shadow: 0 6px 5px #f1f0fa;
+    /* box-shadow: 0 6px 5px #f1f0fa; */
     border-radius: 0 0 5px 5px;
 }
 .listagem .theme_productBuyContainer{

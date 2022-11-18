@@ -1006,9 +1006,9 @@ theme.functions.productListActions = function(){
         let id = $(this).attr('class').split(' ')[1].replace('prod-id-','').trim();
         let url = $(this).find('a.produto-sobrepor').attr('href');        
         if(hasVariants){
-            $(this).append($('<div theme_productBuy><a href="/carrinho/produto/'+ id +'/adicionar" class="theme_productBuy_a theme_buttonBuy-ajax"><span>'+ theme.lang.productListAdd +'</span></a></div>'));
+            $(this).append($('<a href="/carrinho/produto/'+ id +'/adicionar" class="theme_productBuy theme_buttonBuy-ajax"><span>'+ theme.lang.productListAdd +'</span></a>'));
         }else{
-            $(this).append($('<a href="'+ url +'" class="theme_productBuy"><span>'+ theme.lang.productListDetail +'</span></a>'));
+            $(this).append($('<div class="theme_productBuyContainer"><a href="'+ url +'" class="theme_productBuy"><span>'+ theme.lang.productListDetail +'</span></a></div>'));
         }        
     });
     $('.listagem-item .acoes-produto, .listagem-item .acoes-produto-responsiva').remove();   

@@ -1,3 +1,15 @@
+
+@font-face {
+font-family: "Supa Mega Fantastic";
+src: url("https://cdn.jsdelivr.net/gh/alpix-dev/fonts/Supa%20Mega%20Fantastic%20Complete%20Family/Nicky%20Laatz%20%20-%20SupaMegaFantastic-Regular.otf") format("opentype"),
+url("https://cdn.jsdelivr.net/gh/alpix-dev/fonts/Supa%20Mega%20Fantastic%20Complete%20Family/Nicky%20Laatz%20%20-%20SupaMegaFantasticCaps-Regular.otf") format("opentype"),
+url("https://cdn.jsdelivr.net/gh/alpix-dev/fonts/Supa%20Mega%20Fantastic%20Complete%20Family/Nicky%20Laatz%20%20-%20SupaMegaFantasticThin-Regular.otf") format("opentype")
+}
+@font-face {
+font-family: "Supa Mega Fantastic";
+src: url("https://cdn.jsdelivr.net/gh/alpix-dev/fonts/Supa%20Mega%20Fantastic%20Complete%20Family/Nicky%20Laatz%20%20-%20SupaMegaFantasticThin-Regular.otf") format("opentype");
+font-weight:300;
+}
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 :root{
@@ -396,9 +408,9 @@ textarea:focus{
 }
 /* THEME HEADER 1 */
 #cabecalho{
-    position:sticky;
+    /* position:sticky;
     top:-1px;
-    z-index:999;
+    z-index:999; */
     background:#fff;
     transition-delay: 0s;
     transition-duration: 0.4s;
@@ -503,7 +515,7 @@ textarea:focus{
     padding:15px;
 }
 .listagem .listagem-item .info-produto,
-.listagem .listagem-item .info-produto *{text-align:center}
+.listagem .listagem-item .info-produto *{text-align:left}
 .listagem .listagem-item .nome-produto{
     font-family:var(--productFontFamily);
     font-weight:var(--productFontWeight)!important;
@@ -557,6 +569,7 @@ textarea:focus{
     box-shadow: unset;
     border-radius: 50%;
     font-size: 12px;
+    background:#FE676B;
 }
 .bandeiras-produto .adicionado-carrinho{display:none!important;}
 
@@ -1336,6 +1349,9 @@ body #rodape .gateways-rodape{
     line-height: 24px;
 }
 .codigo-produto *{color: var(--titleFontColor)!important;}
+.codigo-produto b{font-weight:500}
+.codigo-produto > span:first-child > b{font-size:0}
+.codigo-produto > span:first-child > b:before{font-size:12px;content:"REF:"}
 
 .thumbs-vertical .elastislide-carousel ul li a{
     border:0;    
@@ -3352,7 +3368,7 @@ html body.carrinho-checkout .identificacao #formularioLogin .login-data > .contr
 .theme_customBanners{
     display: flex;
     gap: 15px;
-    margin: 2rem 0 1rem 0;
+    margin: 2rem 0;
 }
 @media(max-width:990px){
     .theme_customBanners{
@@ -3456,6 +3472,12 @@ body:not(.pagina-inicial) .secao-banners .banner.cheio img{
 }
 
 /* THEME TARJA */
+#theme_tarja_top{
+    background-image: url(https://cdn.awsli.com.br/2516/2516405/arquivos/top-bgbox3.svg);
+    background-repeat: no-repeat;
+    background-position: 300px;
+    background-size: auto 56px;
+}
 .theme_tarja .conteiner,
 .theme_tarja-full .conteiner{box-sizing: border-box;}
 .theme_tarja{
@@ -3808,7 +3830,7 @@ padding: 0 2rem!important;
 .listagem .preco-produto.com-promocao>div{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.5rem;
 }
 
@@ -3878,15 +3900,18 @@ padding: 0 2rem!important;
     margin:0
 }
 
+.secao-banners .slick-arrow svg path{fill:#fff}
 .secao-banners .arrow-r{
     right: 5rem;
-    background: #2252a2;
+    /* background: #2252a2; */
+    background:transparent;
     padding: 10px 0px 9px 5px;
     border-radius: 5px;
 }
 .secao-banners .arrow-l{
     left: 5rem;
-    background: #2252a2;
+    /* background: #2252a2; */
+    background:transparent;
     padding: 10px 5px 9px 0px;
     border-radius: 5px;
 }
@@ -3895,14 +3920,17 @@ padding: 0 2rem!important;
     #theme_footer-payments h4{max-width:100px}
 }
 
-.listagem .listagem-item .preco-produto .preco-parcela,
-.listagem .listagem-item .preco-produto .preco-parcela *{font-size:12px!important}
+/* .listagem .listagem-item .preco-produto .preco-parcela,
+.listagem .listagem-item .preco-produto .preco-parcela *{font-size:12px!important} */
 .listagem .info-produto .preco-produto .titulo{margin-top:0;margin-bottom:0}
 .listagem .info-produto .theme_excerpt{
     padding: 0;
     margin: 0;
-    font-size: 10px;
+    /* font-size: 10px;
     line-height: 12px;
+    margin-top: 1rem; */
+    font-size: 12px;
+    line-height: 17px;
     margin-top: 1rem;
 }
 .listagem .imagem-produto .theme_labels{
@@ -3926,7 +3954,7 @@ padding: 0 2rem!important;
 }
 
 .pagina-produto .abas-custom:before{
-    content: "Descrição Geral";
+    content: "Descubra mais";
     color: #2352A2;
     font-weight: bold;
     font-size: 22px;
@@ -3937,3 +3965,59 @@ padding: 0 2rem!important;
     margin-top: 2rem;
 }
 .pagina-produto .abas-custom .tab-content{margin-top:0;padding-top:1rem;border-top:1px solid #f1f0fa}
+
+/* AJUSTES */
+.menu.superior .nivel-dois a{font-size:14px;}
+.pagina-produto .atributos > div > span > b{font-size:0;}
+.pagina-produto .atributos > div > span > b:before{content:"Agora é só escolher:";font-size:14px;text-transform:initial}
+
+.comprar .popover h3.popover-title{font-size:0}
+.comprar .popover h3.popover-title:after{content:"OPS!";font-size:14px;font-weight:600}
+.comprar .popover .popover-content{font-size:0}
+.comprar .popover .popover-content:after{content:"Selecione um produto.";font-size:14px;}
+@media(min-width:990px){
+    .pagina-inicial #listagemProdutos{
+        position: relative;
+        width: 90vw;
+        left: 50%;
+        transform: translate(-50% , 0);
+    }
+}
+
+.theme_customBanners{justify-content:center;flex-wrap:wrap}
+@media(max-width:990px){
+    .theme_customBanners{flex-direction: column;}
+    .theme_customBanners > *{flex:0 0 100%}
+}
+
+#theme_customBanners-corpo img,
+.banner.cheio img{width:100%;}
+
+.listagem .listagem-item .preco-parcela{
+    padding: 3px 10px 0 10px;
+}
+.listagem .listagem-item .desconto-a-vista,
+.listagem .listagem-item .preco-parcela,
+.listagem .listagem-item .preco-parcela span{font-size:0!important}
+.listagem .listagem-item .preco-parcela > strong{font-size:12px!important}
+.listagem .listagem-item .preco-parcela > strong:first-child:after{content:" de ";font-weight:normal}
+.listagem .listagem-item .desconto-a-vista > strong{font-size:12px!important}
+.listagem .listagem-item .desconto-a-vista > strong:first-child:after{content:" via pix";font-weight:normal}
+
+.apx-custom-title-appended .apx_custom-title{}
+.apx-custom-title-appended .apx_custom-title strong{
+    font-family: "Supa Mega Fantastic";
+    color: #fe676b;
+    font-size: 52px;
+    line-height: initial;
+    display: block;
+    margin: 0 auto -5px auto;
+    rotate: -5deg;
+}
+.apx-custom-title-appended .apx_custom-title small{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: bold;
+    color: #2252a6;
+    font-size: 32px;
+    line-height: initial;
+}

@@ -9,7 +9,7 @@ theme.info.ref = "https://www.alpix.dev/criar-sua-loja-integrada";
 theme.isMobile = window.innerWidth < 990;
 
 theme.lang = {};
-theme.lang.productListDetail = "Ver Produto";
+theme.lang.productListDetail = "Compre Agora";
 theme.lang.productListAdd = "Comprar Agora";
 theme.lang.sideCartTitle = "Meu Carrinho";
 theme.lang.footerTitle1 = "Institucional";
@@ -187,6 +187,14 @@ theme.settings.sliders.products = {
     prevArrow: theme.settings.sliders.config.prevArrow,
     nextArrow: theme.settings.sliders.config.nextArrow,
     responsive: [
+        {
+            breakpoint: 1400,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,            
+                centerMode:true
+            }
+            },
         {
         breakpoint: 1024,
         settings: {
@@ -571,7 +579,7 @@ theme.functions.bannerFromPanelFunctions = function(ref){
    flag = $('.secao-banners img').length;
     $('.secao-banners img').each(function(k, i){
         let trigger = $(this).attr('alt');   
-        
+        //console.log(trigger);
         //ITEM TARJA VANTAGENS
         if(trigger.includes('[item-tarja]')){
             let item = $('<div class="item"></div>');
@@ -601,6 +609,32 @@ theme.functions.bannerFromPanelFunctions = function(ref){
                 }                
                 item.appendTo('#theme_tarja .slides');             
             }       
+        }
+
+        //VITRINE
+        if(trigger.includes('[vitrine-')){
+            let regExp = /\[vitrine-(.*?)\]/;
+            let match = regExp.exec(trigger);
+            if($('.vitrine-' + match[1]).length == 1){
+                if($('#theme_customBanners-' + match[1]).length == 0){
+                    $('.vitrine-' + match[1] + ' + ul').after('<div class="theme_customBanners" id="theme_customBanners-' + match[1] + '"></div>');
+                }
+                $(this).parent('a').length > 0 ? $(this).parent('a').clone().appendTo('#theme_customBanners-' + match[1]) : $(this).clone().appendTo('#theme_customBanners-' + match[1]);                
+            }
+            $(this).closest('li').length > 0 ? $(this).closest('li').remove() : $(this).parent().remove();
+        }
+        if(trigger.includes('[after-')){
+            let regExp = /\[after-(.*?)\]/;
+            let match = regExp.exec(trigger);
+            if($(match[1]).length == 1){
+                let matchClean = match[1].replace('.','').replace('#','');
+                console.log(match);
+                if($('#theme_customBanners-' + matchClean).length == 0){
+                    $(match[1]).after('<div class="theme_customBanners" id="theme_customBanners-' + matchClean + '"></div>');
+                }
+                $(this).parent('a').length > 0 ? $(this).parent('a').clone().appendTo('#theme_customBanners-' + matchClean) : $(this).clone().appendTo('#theme_customBanners-' + matchClean);                
+            }
+            $(this).closest('li').length > 0 ? $(this).closest('li').remove() : $(this).parent().remove();
         }
         
         //TARJA TOPO
@@ -635,8 +669,12 @@ theme.functions.bannerFromPanelFunctions = function(ref){
             let titulo = regExp.exec(trigger)[1];
             let titleObj = $('.' + titulo);
             if(titleObj.length > 0){
+                let appendHTML = $(this).next('p').length > 0 ? $(this).next('p')[0].outerHTML : $(this)[0].outerHTML;
+                console.log(appendHTML);
+                appendHTML = $(appendHTML).text().includes('/') ? '<strong>' + $(appendHTML).text().split('/').join('</strong><small>') + '</small>' : appendHTML;
+                console.log(appendHTML);
                 titleObj.addClass('apx-custom-title-appended');
-                titleObj.prepend('<div class="apx_custom-title">' + $(this).parent().html() + '</div>');
+                titleObj.prepend('<div class="apx_custom-title">' + appendHTML + '</div>');
             }
 
             $(this).closest('li').length > 0 ? $(this).closest('li').remove() : $(this).parent().remove();
@@ -687,7 +725,7 @@ theme.functions.bannerFromPanelFunctions = function(ref){
             }
             $(this).closest('li').clone().appendTo('#theme_categorySlider > .slides'); 
             $(this).closest('li').length > 0 ? $(this).closest('li').remove() : $(this).parent().remove();
-            //$(this).remove();
+            
         }
 
         //NEWSLETTER COVER
@@ -860,21 +898,22 @@ theme.functions.init = function(){
         theme.build.account(1);    
         theme.functions.sideCartSet();
         theme.functions.sideCartActions();
-        theme.functions.resizeBanners();
+        //theme.functions.resizeBanners();
         theme.functions.unwrapProductList();
         theme.functions.flags();    
         theme.functions.productListActions();    
         theme.functions.productListImageSize(theme.settings.imageSize);
         theme.functions.bannerFromPanelFunctions();
         theme.functions.unflexBanners();
+        
         theme.watch();
         
-        const el = document.querySelector("#cabecalho")
-        const observerMenu = new IntersectionObserver( 
-        ([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
-        { threshold: [1] }
-        );    
-        observerMenu.observe(el);    
+        // const el = document.querySelector("#cabecalho")
+        // const observerMenu = new IntersectionObserver( 
+        // ([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+        // { threshold: [1] }
+        // );    
+        // observerMenu.observe(el);    
         $('body').css('opacity','1');
         $('.theme_aside-shadow').click(function(){
             $('body').removeClass('sideCart-visible').removeClass('asideSearch-visible').removeClass('asideMenu-visible').removeClass('asideAccount-visible');
@@ -890,7 +929,7 @@ theme.functions.unwrapProductList = function(){
         $('.listagem-linha.flexslider').each(function(){
             let listagemUL = $(this).parent('ul');
             let listagemQtdLinhas = $(this).parent('ul').attr('data-produtos-linha');
-            theme.settings.sliders.products.slidesToShow = parseInt(listagemQtdLinhas);
+            //theme.settings.sliders.products.slidesToShow = parseInt(listagemQtdLinhas);
             theme.functions.flexDestroy($(this));
             listagemUL.find('.listagem-linha').apx_slick(theme.settings.sliders.products);
             $(this).removeClass('flexslider');
@@ -898,15 +937,16 @@ theme.functions.unwrapProductList = function(){
             listagemUL.find('[data-imagem-caminho]').each(function(){
                 $(this).after('<img src="'+ $(this).attr('data-imagem-caminho')+'" class="imagem-zoom"/>');
             })
-        })   
+        })    
     }
 };
-theme.functions.resizeBanners = function(){
-    $('.secao-banners img').each(function(){
-        let url = $(this).attr('src').replace('400x400/','700x700/').replace('1140x1140/','1920x1920/');
+theme.functions.resizeImages = function(){
+    $('.secao-banners img, .theme_tarja img, #theme_categorySlider img, .theme_customBanners img').each(function(){
+        let url = $(this).attr('src').split('/');
+        url[3] = $(this).innerWidth() + 'x' + $(this).innerWidth();
+        url = url.join('/');
         $(this).attr('src',url);
-
-    })
+    });
 };
 
 theme.functions.blockPage = function (status){
@@ -941,8 +981,12 @@ theme.functions.productListImageSize = function(param){
 
     $('.listagem-item .imagem-produto').each(function(){
         $(this).find('img').each(function(){
-            let url = $(this).attr('src').replace('300x300/','500x500/').replace('400x400/','600x600/');
-            $(this).attr('src',url);
+            if(!$(this).attr('src').includes('production/static')){
+                let url = $(this).attr('src').split('/');
+                url[3] = $(this).innerWidth() + 'x' + $(this).innerWidth();
+                url = url.join('/');
+                $(this).attr('src',url);
+            }
         })
     })
 
@@ -960,7 +1004,7 @@ theme.functions.productListActions = function(){
     $('.listagem-item').each(function(){
         let hasVariants = $(this).find('.botao-comprar-ajax').length > 0 ? true : false;
         let id = $(this).attr('class').split(' ')[1].replace('prod-id-','').trim();
-        let url = $(this).find('.info-produto > a:first-child').attr('href');        
+        let url = $(this).find('a.produto-sobrepor').attr('href');        
         if(hasVariants){
             $(this).append($('<a href="/carrinho/produto/'+ id +'/adicionar" class="theme_productBuy theme_buttonBuy-ajax"><span>'+ theme.lang.productListAdd +'</span></a>'));
         }else{
@@ -1078,6 +1122,7 @@ theme.functions['pagina-inicial'] = function(){
         theme.functions.flexDestroy($('.marcas .flexslider'));
         $('.marcas .slides').apx_slick(theme.settings.sliders.brands);
         $('<div class="titulo-categoria cor-principal"><strong>'+ theme.lang.brandTitle +'</strong></div>').prependTo('.marcas');
+        $('.marcas').insertAfter($('[data-produtos-linha]')[1]);
     }
     
 };
@@ -1607,6 +1652,7 @@ $(document).ready(function(){
 });
 $(window).load(function(){
     theme.functions.productListImageSize(theme.settings.imageSize);
+    theme.functions.resizeImages();
 });
 
 
